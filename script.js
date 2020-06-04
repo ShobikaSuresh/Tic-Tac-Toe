@@ -78,7 +78,7 @@ function loginvalidate()
 		if(flag==2)
 		{
 			alert("Login successful!");
-			gamePage();
+			playerDetailsPage();
 		}
 		else
 		alert("Incorrect password. Please try again");
@@ -167,6 +167,36 @@ function backToLoginPage()
 	div2.replaceChild(loginlink,reglink);
 }
 
+var playertext = document.createElement("p");
+var playerOne = document.createElement("input");
+var playerTwo = document.createElement("input");
+var playbtn = document.createElement("button");
+
+function playerDetailsPage(){
+	playertext.innerHTML = "Player Details";
+	playertext.id = "logintext";
+	playertext.class = "pfont";
+
+	playerOne.placeholder = "Player One Name";
+	playerOne.id = "playerOne";
+	playerOne.classList.add("loginfield");
+
+	playerTwo.placeholder = "Player Two Name";
+	playerTwo.id = "playerTwo";
+	playerTwo.classList.add("loginfield");
+
+	playbtn.innerHTML = "Play";
+	playbtn.id = "loginbtn"; 
+	playbtn.span = "hover";
+	playbtn.setAttribute("onclick","gamePage()");
+
+	div2.replaceChild(playertext,logintext);
+	div2.replaceChild(playerOne,loginid);
+	div2.replaceChild(playerTwo,loginpwd);
+	div2.replaceChild(playbtn,loginbtn);
+	div2.replaceChild(loginlink,loginlink);
+}
+
 
 function gamePage(){
 	div1.removeChild(div2);
@@ -240,11 +270,14 @@ function gamePage(){
 	/* Game logic */
 	const statusDisplay = document.querySelector('.gamestatus');
 	let gameActive = true;
-	let currentPlayer = "X";
+	var currentPlayer = 'X';
+	var player1 = playerOne.value;
+	var player2 = playerTwo.value;
+	var nowPlaying = playerOne.value;
 	let gameState = ["", "", "", "", "", "", "", "", ""];
-	const winningMessage = () => `Player ${currentPlayer} has won!`;
+	const winningMessage = () => `Player ${nowPlaying} has won!`;
 	const drawMessage = () => `Game ended in a draw!`;
-	const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
+	const currentPlayerTurn = () => `It's ${nowPlaying}'s turn`;
 	statusDisplay.innerHTML = currentPlayerTurn();
 	document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', afterCellClick));
 	document.querySelector('.gamerestart').addEventListener('click', restartGame);
@@ -306,6 +339,7 @@ function gamePage(){
 }
 
 function playerChange() {
+	nowPlaying = currentPlayer === "X" ? player2 : player1;
 	currentPlayer = currentPlayer === "X" ? "O" : "X";
 	statusDisplay.innerHTML = currentPlayerTurn();
   }
