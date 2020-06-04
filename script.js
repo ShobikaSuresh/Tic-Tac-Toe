@@ -10,7 +10,7 @@ loginPage();
 }
 
 
-var array = [{"emailid":"shobika","pwd":"sappa"},{"emailid":"shreya","pwd":"aaya"},{"emailid":"vjbakash","pwd":"korkaali"}];
+var array = [{"emailid":"shobika","pwd":"sappa"},{"emailid":"shreya","pwd":"aaya"}];
 
 
 var logintext = document.createElement("p");
@@ -26,7 +26,7 @@ function loginPage()
 	logintext.id = "logintext";
 	logintext.class = "pfont";
 
-	loginid.placeholder = "Email Id";
+	loginid.placeholder = "Username";
 	loginid.id = "loginid";
 	loginid.classList.add("loginfield");
 
@@ -61,26 +61,30 @@ function loginvalidate()
 {
 	var useremail = document.getElementById("loginid").value;
 	var userpwd = document.getElementById("loginpwd").value;
-	var flag =0;
+	var flag=0;
 
 	for(let i in array){
-		if(useremail!=array[i].emailid)
-			{ alert("Incorrect username. Please try again");  break; }
-		else if(useremail == array[i].emailid)
+		if(useremail==array[i].emailid)
+			{ flag = 1;break;}
+	}
+		
+	if(flag==1)
+	{
+		for(let i in array)
 		{
 			if(userpwd==array[i].pwd)
-				{  flag =1;break;}
-			else if(userpwd!=array[i].pwd)	
-   				{ alert("Incorrect password. Please try again");  break; }
+			{flag = 2; break;}
 		}
-		
+		if(flag==2)
+		{
+			alert("Login successful!");
+			gamePage();
+		}
+		else
+		alert("Incorrect password. Please try again");
 	}
-	if(flag==1){
-		alert("Login successful!");
-		gamePage();
-	}
-	
-	
+	else
+	alert("Incorrect username. Please try again");
 }
 
 
@@ -97,7 +101,7 @@ function registerPage()
 	regtext.class = "pfont";
 
 
-	regid.placeholder = "Email Id";
+	regid.placeholder = "Username";
 	regid.id = "regid";
 	regid.classList.add("regfield");
 
@@ -132,6 +136,7 @@ function regvalidate()
 	var newemail = document.getElementById("regid").value;
 	var newpwd = document.getElementById("regpwd").value;
 	var flag =0;
+	var regobj = {"emailid" : newemail,"pwd" : newpwd};
 
 	for(let i in array){
 		if((newemail == array[i].emailid)&&(newpwd == array[i].pwd))
@@ -141,6 +146,7 @@ function regvalidate()
 	if(flag==1)
 	alert("Already exists!")
     else{
+		array.push(regobj);
 		alert("Registered successfully!");
 		document.getElementById("regid").value = ' ';
 		document.getElementById("regpwd").value = ' ';
