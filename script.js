@@ -61,6 +61,7 @@ function loginvalidate()
 {
 	var useremail = document.getElementById("loginid").value;
 	var userpwd = document.getElementById("loginpwd").value;
+	var flag =0;
 
 	for(let i in array){
 		if(useremail!=array[i].emailid)
@@ -68,13 +69,17 @@ function loginvalidate()
 		else if(useremail == array[i].emailid)
 		{
 			if(userpwd==array[i].pwd)
-				{ alert("Login successful!"); break;}
+				{  flag =1;break;}
 			else if(userpwd!=array[i].pwd)	
    				{ alert("Incorrect password. Please try again");  break; }
 		}
 		
 	}
-	gamePage();
+	if(flag==1){
+		alert("Login successful!");
+		gamePage();
+	}
+	
 	
 }
 
