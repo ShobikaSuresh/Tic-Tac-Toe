@@ -194,10 +194,12 @@ function playerDetailsPage(){
 	div2.replaceChild(playerOne,loginid);
 	div2.replaceChild(playerTwo,loginpwd);
 	div2.replaceChild(playbtn,loginbtn);
-	div2.replaceChild(loginlink,loginlink);
+	div2.removeChild(loginlink);
 }
 
 
+
+var spinResult;
 function gamePage(){
 	div1.removeChild(div2);
 	var gamepage = document.createElement("section");
@@ -206,6 +208,17 @@ function gamePage(){
 	gametitle.innerHTML = "Tic Tac Toe";
 	gamepage.appendChild(gametitle);
 
+	
+	var gamespin = document.createElement("button");
+	gamespin.classList.add("gamespin");
+	gamespin.innerHTML = "Spin to choose!"
+	gamespin.onclick = () => {
+		spinResult = Math.round(Math.random());
+		
+	}
+	gamepage.appendChild(gamespin);
+
+	
 	var gamecontainer =  document.createElement("div");
 	gamecontainer.classList.add("gamecontainer");
 
@@ -270,10 +283,24 @@ function gamePage(){
 	/* Game logic */
 	const statusDisplay = document.querySelector('.gamestatus');
 	let gameActive = true;
-	var currentPlayer = 'X';
+	var currentPlayer;
 	var player1 = playerOne.value;
 	var player2 = playerTwo.value;
-	var nowPlaying = playerOne.value;
+	var nowPlaying;
+		if(spinResult == 0)
+	 {
+		 
+		nowPlaying = player1;
+		 currentPlayer = 'X';
+		 alert(nowPlaying);
+	 }
+	else{
+		
+		nowPlaying = player2;
+		currentPlayer = 'O';
+		alert(nowPlaying);
+	}
+	 
 	let gameState = ["", "", "", "", "", "", "", "", ""];
 	const winningMessage = () => `Player ${nowPlaying} has won!`;
 	const drawMessage = () => `Game ended in a draw!`;
